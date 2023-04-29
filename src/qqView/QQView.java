@@ -30,14 +30,19 @@ public class QQView {
 
                         switch (scanner.nextInt()){
                             case 1:
+                                System.out.println(secMenuOptions[0]);
                                 break;
                             case 2:
+                                System.out.println(secMenuOptions[1]);
                                 break;
                             case 3:
+                                System.out.println(secMenuOptions[2]);
                                 break;
                             case 4:
+                                System.out.println(secMenuOptions[3]);
                                 break;
-                            case 5:
+                            case 9:
+                                System.out.println(secMenuOptions[8]);
                                 break;
 
                         }
