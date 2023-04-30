@@ -13,6 +13,11 @@ public class User implements Serializable {
         return userID;
     }
 
+    public User(String userID, String passID) {
+        this.userID = userID;
+        this.passID = passID;
+    }
+
     public void setUserID(String userID) {
         this.userID = userID;
     }

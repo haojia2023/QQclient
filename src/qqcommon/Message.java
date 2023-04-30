@@ -2,7 +2,7 @@ package qqcommon;
 
 import java.io.Serializable;
 
-public class Message implements Serializable ,MassageType {
+public class Message implements Serializable , MessageType {
     private static final long serialVersionUID = 1l;
 
     private String sender;
