@@ -52,7 +52,8 @@ public class QQView {
                                 case 9:
                                     loop = false;
                                     break;
-
+                                default:
+                                    System.out.println("参数错误");
                             }
                         }
                     }else {
@@ -70,5 +71,4 @@ public class QQView {
 
             }
         }
-
     }
