@@ -1,5 +1,6 @@
 package service;
 
+import qqView.QQView;
 import qqcommon.Message;
 import qqcommon.MessageType;
 import qqcommon.User;
@@ -9,6 +10,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
+
+import static java.lang.Thread.sleep;
 
 public class UserClientService {
     private User user;
@@ -23,7 +26,7 @@ public class UserClientService {
             ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
             Message o = (Message) ois.readObject();
             if(MessageType.LOGIN_SUCCEED.equals(o.getMassageType())) {
-                ClientConnectServerThread cst = new ClientConnectServerThread();
+                ClientConnectServerThread cst = new ClientConnectServerThread(socket);
                 cst.start();
                 ManageConnectServerThread.addCST(user.getUserID(),cst);
                 return true;
@@ -34,18 +37,32 @@ public class UserClientService {
         }
         return false;
     }
-    private void printOnlineUser(){
+    public void OnlineList(){
         try {
             Message obj = new Message();
             obj.setMassageType(MessageType.GET_ONLINE_USER);
             Socket socket1 = ManageConnectServerThread.searchCST(user.getUserID()).getSocket();
             ObjectOutputStream oos = new ObjectOutputStream(socket1.getOutputStream());
             oos.writeObject(obj);
-
+            QQView.val = true;
         } catch (Exception e) {
 
         }
 
+
+    }
+
+    public void ExitUser(){
+        Message mes = new Message();
+        mes.setMassageType(MessageType.USER_EXIT);
+        mes.setSender(user.getUserID());
+        try {
+            ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
+            oos.writeObject(mes);
+        } catch (IOException e) {
+
+        }
+        ManageConnectServerThread.delCST(user.getUserID()).setLoop(false);
 
     }
 

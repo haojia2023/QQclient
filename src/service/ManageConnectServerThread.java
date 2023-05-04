@@ -12,4 +12,6 @@ public class ManageConnectServerThread {
     public static ClientConnectServerThread searchCST(String userID){
         return hs.get(userID);
     }
+
+    public static ClientConnectServerThread delCST(String userID){return hs.remove(userID);}
 }
