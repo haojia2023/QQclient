@@ -30,7 +30,7 @@ public class QQView {
                         System.out.println("welcome" + user);
                         boolean loop = true;
                         while(loop){
-
+                            if(ucs.IsClosed()) break;
                             int i = 0;
                             for (String s : secMenuOptions) {
                                 i++;
@@ -44,10 +44,16 @@ public class QQView {
                                     while(val){}
                                     break;
                                 case "2":
-                                    System.out.println(secMenuOptions[1]);
+                                    System.out.println("请输入发送的内容：");
+                                    ucs.SendUser("-1",scanner.next());
+                                    //System.out.println(secMenuOptions[1]);
                                     break;
                                 case "3":
-                                    System.out.println(secMenuOptions[2]);
+                                    System.out.println("请输入发送的用户名：");
+                                    String name = scanner.next();
+                                    System.out.println("请输入发送的内容：");
+                                    ucs.SendUser(name,scanner.next());
+                                    //System.out.println(secMenuOptions[2]);
                                     break;
                                 case "4":
                                     System.out.println(secMenuOptions[3]);

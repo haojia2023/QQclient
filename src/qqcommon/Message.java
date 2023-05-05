@@ -11,14 +11,14 @@ public class Message implements Serializable ,MessageType {
     private String content;
     private String sendTime;
 
-    public String getMassageType() {
-        return massageType;
+    public String getMessageType() {
+        return messageType;
     }
 
-    private String massageType;
+    private String messageType;
 
-    public void setMassageType(String massageType) {
-        this.massageType = massageType;
+    public void setMessageType(String messageType) {
+        this.messageType = messageType;
     }
 
     public String getSender() {
