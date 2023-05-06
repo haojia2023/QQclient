@@ -5,9 +5,7 @@ import qqcommon.Message;
 import qqcommon.MessageType;
 import qqcommon.User;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.text.SimpleDateFormat;
@@ -67,6 +65,54 @@ public class UserClientService {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     *
+     * @param senderPath 发送的文件路径
+     * @param getter    接受的用户
+     * @param getterPath    接受的用户路径
+     */
+    public boolean SendFile(String senderPath,String getter,String getterPath){
+        File file = new File(senderPath);
+        if (!file.exists()) return false;
+        if(user.getUserID().equals(getter)){
+            System.out.print("发送者和接收者不能为同一个人,");
+            return false;
+        }
+        int length = (int) file.length();
+        byte[] bytes = new byte[length];
+        FileInputStream fis = null;
+        try {
+            fis = new FileInputStream(senderPath);
+            fis.read(bytes);
+
+        } catch (Exception e) {
+            return false;
+        } finally {
+            if(fis != null)
+                try {
+                    fis.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+        }
+        Message mes = new Message();
+        mes.setMessageType(MessageType.File_MES);
+        mes.setSender(user.getUserID());
+        mes.setGetter(getter);
+        mes.setSrc(senderPath);
+        mes.setDest(getterPath);
+        mes.setFileLen(length);
+        mes.setSendTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));//设置发送的时间的格式
+        mes.setFileBytes(bytes);
+        try {
+            new ObjectOutputStream(socket.getOutputStream()).writeObject(mes);
+        } catch (IOException e) {
+            return false;
+        }
+        System.out.println(user.getUserID() + "\\" + senderPath + "到" + getter + "\\" + getterPath + "发送成功");
+        return true;
     }
 
     public void ExitUser(){

@@ -7,4 +7,5 @@ public interface MessageType {
     String SEND_ONLINE_USER = "4";//发送在线用户
     String COMMON_MES = "5";;//普通消息
     String USER_EXIT = "6";//退出登录
+    String File_MES = "7";//文件消息
 }

@@ -4,9 +4,13 @@ import qqView.QQView;
 import qqcommon.Message;
 import qqcommon.MessageType;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.net.Socket;
+import java.util.Locale;
+import java.util.Scanner;
 
 public class ClientConnectServerThread extends Thread {
     private boolean loop = true;
@@ -39,7 +43,27 @@ public class ClientConnectServerThread extends Thread {
                     QQView.val = false;
                 }else if (mes.equals(MessageType.COMMON_MES) && !(o.getSender().equals(o.getGetter()))){
                     System.out.println(o.getSendTime() + "\t" +o.getSender() + "对"+ o.getGetter() +"说：" + o.getContent());
-                }
+                }else if(mes.equals(MessageType.File_MES)){
+
+                        File file = new File(o.getDest());
+                        if (!file.exists()) {
+                            file.getParentFile().mkdirs();
+                        }
+                        FileOutputStream fos = null;
+                        try {
+                            fos = new FileOutputStream(file, false);
+                            fos.write(o.getFileBytes(),0,o.getFileLen());
+                        } catch (IOException e) {
+                            System.out.println("写入失败");
+                        } finally {
+                            try {
+                                fos.close();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    System.out.println(o.getSender() + "\\" + o.getSrc() + "到" + o.getGetter() + "\\" + o.getDest() +  "接收成功");
+                    }
             } catch (Exception e) {
                 try {
                     socket.close();

@@ -56,7 +56,15 @@ public class QQView {
                                     //System.out.println(secMenuOptions[2]);
                                     break;
                                 case "4":
-                                    System.out.println(secMenuOptions[3]);
+                                    System.out.println("请输入发送文件的路径：");
+                                    String senderPath = scanner.next();
+                                    System.out.println("请输入发送的用户名：");
+                                    String getter = scanner.next();
+                                    System.out.println("请输入发送的用户接收的路径：");
+                                    if (!ucs.SendFile(senderPath,getter,scanner.next())) {
+                                        System.out.println("发送失败!");
+                                    }
+                                    //System.out.println(secMenuOptions[3]);
                                     break;
                                 case "9":
                                     loop = false;
