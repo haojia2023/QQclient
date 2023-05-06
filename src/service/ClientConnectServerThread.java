@@ -9,7 +9,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.net.Socket;
-import java.util.Locale;
+import java.nio.file.Paths;
 import java.util.Scanner;
 
 public class ClientConnectServerThread extends Thread {
@@ -44,6 +44,21 @@ public class ClientConnectServerThread extends Thread {
                 }else if (mes.equals(MessageType.COMMON_MES) && !(o.getSender().equals(o.getGetter()))){
                     System.out.println(o.getSendTime() + "\t" +o.getSender() + "对"+ o.getGetter() +"说：" + o.getContent());
                 }else if(mes.equals(MessageType.File_MES)){
+                    QQView.val = true;
+                    System.out.println("接收文件：" + o.getSender() + "\\" + o.getSrc() + "到" + o.getGetter() + "\\" + o.getDest() +"，接收文件？（Y\\N）");
+                    Scanner scanner1 = new Scanner(System.in);
+                    if(scanner1.next().equalsIgnoreCase("n")) {
+                        continue;
+                    }
+                    System.out.println("需要更改文件地址吗？（Y\\N）");
+                    if(scanner1.next().equalsIgnoreCase("y")){
+                        do {
+                            System.out.println("请输入正确的存放地址：");
+                            o.setDest(scanner1.next());
+                        }
+                        while(!Paths.get(o.getDest()).isAbsolute());
+                    }
+                    QQView.val = false;
 
                         File file = new File(o.getDest());
                         if (!file.exists()) {
@@ -62,7 +77,7 @@ public class ClientConnectServerThread extends Thread {
                                 e.printStackTrace();
                             }
                         }
-                    System.out.println(o.getSender() + "\\" + o.getSrc() + "到" + o.getGetter() + "\\" + o.getDest() +  "接收成功");
+                    System.out.println("接收成功");
                     }
             } catch (Exception e) {
                 try {

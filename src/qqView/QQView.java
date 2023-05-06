@@ -4,6 +4,8 @@ import service.UserClientService;
 
 import java.util.Scanner;
 
+import static java.lang.Thread.sleep;
+
 public class QQView {
     public static void main(String[] args) {
         new QQView().startMain();
@@ -13,6 +15,7 @@ public class QQView {
     private String[] secMenuOptions = {"显示用户","群发消息","私聊消息","发送文件",null,null,null,null,"系统退出"};
     private Scanner scanner = new Scanner(System.in);
     private UserClientService ucs = new UserClientService();
+
     private void startMain(){
         while(loop){
             System.out.println("登录界面");
@@ -31,6 +34,11 @@ public class QQView {
                         boolean loop = true;
                         while(loop){
                             if(ucs.IsClosed()) break;
+                            try {
+                                while(val){sleep(100);}
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
                             int i = 0;
                             for (String s : secMenuOptions) {
                                 i++;
@@ -41,7 +49,6 @@ public class QQView {
                                 case "1":
                                     //System.out.println(secMenuOptions[0]);
                                     ucs.OnlineList();
-                                    while(val){}
                                     break;
                                 case "2":
                                     System.out.println("请输入发送的内容：");
