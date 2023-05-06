@@ -38,7 +38,7 @@ public class ClientConnectServerThread extends Thread {
                         System.out.println("User" + user);
                     QQView.val = false;
                 }else if (mes.equals(MessageType.COMMON_MES) && !(o.getSender().equals(o.getGetter()))){
-                    System.out.println(o.getSender() + "对"+ o.getGetter() +"说：" + o.getContent());
+                    System.out.println(o.getSendTime() + "\t" +o.getSender() + "对"+ o.getGetter() +"说：" + o.getContent());
                 }
             } catch (Exception e) {
                 try {

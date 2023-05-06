@@ -10,6 +10,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class UserClientService {
     private User user;
@@ -55,6 +57,7 @@ public class UserClientService {
     public void SendUser(String getterID,String content){
         Message message = new Message();
         message.setMessageType(MessageType.COMMON_MES);
+        message.setSendTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));//设置发送的时间的格式
         message.setSender(user.getUserID());
         message.setGetter(getterID);
         message.setContent(content);
