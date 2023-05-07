@@ -52,7 +52,7 @@ public class QQView {
                                     break;
                                 case "2":
                                     System.out.println("请输入发送的内容：");
-                                    ucs.SendUser("-1",scanner.next());
+                                    ucs.SendUser("所有人",scanner.next());
                                     //System.out.println(secMenuOptions[1]);
                                     break;
                                 case "3":
